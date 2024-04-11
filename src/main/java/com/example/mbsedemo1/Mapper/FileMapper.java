@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface FileMapper {
     // 插入新文件
-    @Insert("INSERT INTO files (name, path, size, upload_time, content) VALUES (#{name}, #{path}, #{size}, #{uploadTime}, #{content})")
+    @Insert("INSERT INTO files (name, size, upload_time, content, folder_id) VALUES (#{name}, #{size}, #{uploadTime}, #{content}, #{folderId})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(File file);
 
@@ -30,7 +30,7 @@ public interface FileMapper {
     List<File> findByFolderId(int folderId);
 
     // 更新文件记录
-    @Update("UPDATE files SET name = #{name}, path = #{path}, size = #{size}, upload_time = #{uploadTime}, content = #{content}, search_vector = to_tsvector('english', #{content}) WHERE id = #{id}")
+    @Update("UPDATE files SET name = #{name}, size = #{size}, upload_time = #{uploadTime}, content = #{content}, search_vector = to_tsvector('english', #{content}) WHERE id = #{id}")
     void update(File file);
 
     // 删除所有文件记录

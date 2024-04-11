@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -34,6 +35,7 @@ public class FolderController {
         Folder folder = new Folder();
         folder.setName(request.getName());
         folder.setProjectId(request.getProjectId());
+        folder.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         folderService.createFolder(folder);
 
         return ResponseEntity

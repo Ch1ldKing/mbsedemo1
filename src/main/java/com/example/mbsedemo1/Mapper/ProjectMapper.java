@@ -7,7 +7,7 @@ import java.util.List;
 @Mapper
 public interface ProjectMapper {
 
-    @Insert("INSERT INTO projects (name, description, created_at) VALUES (#{name}, #{description}, #{createdAt})")
+    @Insert("INSERT INTO projects (name, created_at) VALUES (#{name}, #{createdAt})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(Project project);
 
@@ -17,7 +17,7 @@ public interface ProjectMapper {
     @Select("SELECT * FROM projects")
     List<Project> findAll();
 
-    @Update("UPDATE projects SET name = #{name}, description = #{description} WHERE id = #{id}")
+    @Update("UPDATE projects SET name = #{name} WHERE id = #{id}")
     void update(Project project);
 
     @Delete("DELETE FROM projects WHERE id = #{id}")

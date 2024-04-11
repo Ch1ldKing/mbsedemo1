@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -31,6 +32,7 @@ public class ProjectController {
     public ResponseEntity<String> createProject(@RequestBody @Valid ProjectCreationRequest request) {
         Project project = new Project();
         project.setName(request.getName());
+        project.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         // 设置其他默认属性或从request中获取其他属性
         projectService.createProject(project);
 

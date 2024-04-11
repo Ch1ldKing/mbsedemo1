@@ -9,7 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -34,6 +37,11 @@ public class FileController {
         return fileService.getFileById(fileId);
     }
 
+    @GetMapping("/search")
+    public List<File> searchFiles(@RequestParam String query) {
+        return fileService.searchFiles(query);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<String> createFile(@RequestBody @Valid FileCreationRequest request) {
         File file = new File();
@@ -45,5 +53,38 @@ public class FileController {
 
         return new ResponseEntity<>("File '" + request.getName() + "' created successfully", HttpStatus.CREATED);
     }
-    // 其他与文件相关的操作...
+    @PostMapping("/upload")
+    public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("folderId") Integer folderId) {
+        if (file.isEmpty()) {
+            return "The file is empty";
+        }
+
+        // 限制文件类型为txt
+        if (!file.getContentType().equals("text/plain")) {
+            return "Only txt files are allowed";
+        }
+
+        try {
+            byte[] bytes = file.getBytes();
+            String content = new String(bytes);
+
+            // 创建File对象并保存到数据库
+            File fileToSave = new File();
+            fileToSave.setName(file.getOriginalFilename());
+            fileToSave.setSize(file.getSize());
+            fileToSave.setUploadTime(new Timestamp(System.currentTimeMillis()));
+            fileToSave.setFolderId(folderId);
+            fileToSave.setContent(content);
+
+            fileService.save(fileToSave); // 调用Service层方法保存File对象
+
+            return "File uploaded successfully: " + file.getOriginalFilename();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "File upload failed: " + e.getMessage();
+        }
+    }
+
+
+// 其他与文件相关的操作...
 }

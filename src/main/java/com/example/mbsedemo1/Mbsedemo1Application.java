@@ -39,7 +39,6 @@ public class Mbsedemo1Application {
 
         File file = new File();
         file.setName("TestFile.txt");
-        file.setPath("/test/path");
         file.setSize(1024L);
         file.setUploadTime(new Timestamp(System.currentTimeMillis()));
         file.setContent("This is a sample content for full text search testing.");
