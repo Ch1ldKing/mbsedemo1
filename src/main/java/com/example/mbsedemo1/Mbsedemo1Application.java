@@ -25,6 +25,8 @@ public class Mbsedemo1Application {
             helloWorld(); // 调用你的方法
 //            testFullTextSearch();
         };
+
+        
     }
 
     public void helloWorld() {
