@@ -1,13 +1,19 @@
 package com.example.mbsedemo1.Controller;
 
+import com.example.mbsedemo1.DTO.FolderCreationRequest;
 import com.example.mbsedemo1.Entity.Folder;
 import com.example.mbsedemo1.Service.FolderService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("/folders")
 public class FolderController {
 
@@ -21,6 +27,18 @@ public class FolderController {
     @GetMapping("/byProject/{projectId}")
     public List<Folder> getFoldersByProject(@PathVariable int projectId) {
         return folderService.getFoldersByProjectId(projectId);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<String> createFolder(@RequestBody @Valid FolderCreationRequest request) {
+        Folder folder = new Folder();
+        folder.setName(request.getName());
+        folder.setProjectId(request.getProjectId());
+        folderService.createFolder(folder);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body("Folder '" + request.getName() + "' created successfully for Project ID " + request.getProjectId());
     }
 
     // 其他与文件夹相关的操作...

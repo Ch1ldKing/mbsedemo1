@@ -1,8 +1,9 @@
 package com.example.mbsedemo1.Controller;
 
+import com.example.mbsedemo1.DTO.ProjectCreationRequest;
 import com.example.mbsedemo1.Entity.Project;
-import com.example.mbsedemo1.Entity.ProjectCreationRequest;
 import com.example.mbsedemo1.Service.ProjectService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +28,13 @@ public class ProjectController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createProject(@RequestBody Project project) {
-        // 假设根据文件名称创建的项目名与文件名相同，或者进行一定的转换
-
+    public ResponseEntity<String> createProject(@RequestBody @Valid ProjectCreationRequest request) {
+        Project project = new Project();
+        project.setName(request.getName());
+        // 设置其他默认属性或从request中获取其他属性
         projectService.createProject(project);
 
-        return new ResponseEntity<>("Project created successfully with file name: " + project.getName(), HttpStatus.CREATED);
+        return new ResponseEntity<>("Project '" + request.getName() + "' created successfully", HttpStatus.CREATED);
     }
     // 其他与项目相关的操作...
 }

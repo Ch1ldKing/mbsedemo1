@@ -12,6 +12,7 @@ public class File {
     private Long size;
     private Timestamp uploadTime;
     private String content;
+    private Integer folderId; // 外键，指向 Folder
 
     // 构造函数
     public File() {}
