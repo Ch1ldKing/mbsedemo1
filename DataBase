@@ -2,16 +2,28 @@ CREATE DATABASE file_management;
 CREATE TABLE IF NOT EXISTS files (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    path VARCHAR(255) NOT NULL,
     size BIGINT NOT NULL,
-    upload_time TIMESTAMP NOT NULL
+    upload_time TIMESTAMP NOT NULL,
+    content TEXT
 );
-ALTER TABLE files ADD COLUMN content TEXT;
+
 ALTER TABLE files ADD COLUMN search_vector TSVECTOR;
-
 UPDATE files SET search_vector = to_tsvector('english', content);
-
 CREATE INDEX search_vector_idx ON files USING GIN(search_vector);
+
+-- 创建触发器函数
+CREATE OR REPLACE FUNCTION files_search_vector_update() RETURNS trigger AS $$
+BEGIN
+  NEW.search_vector := to_tsvector('english', NEW.content);
+  RETURN NEW;
+END
+$$ LANGUAGE plpgsql;
+
+-- 创建触发器
+CREATE TRIGGER trg_files_search_vector_update
+BEFORE INSERT OR UPDATE ON files
+FOR EACH ROW EXECUTE FUNCTION files_search_vector_update();
+
 CREATE TABLE IF NOT EXISTS projects (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
