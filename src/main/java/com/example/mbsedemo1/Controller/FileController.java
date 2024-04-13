@@ -1,6 +1,8 @@
 package com.example.mbsedemo1.Controller;
 
-import com.example.mbsedemo1.DTO.FileCreationRequest;
+import com.example.mbsedemo1.DTO.File.FileContentUpdateRequest;
+import com.example.mbsedemo1.DTO.File.FileCreationRequest;
+import com.example.mbsedemo1.DTO.File.FileNameUpdateRequest;
 import com.example.mbsedemo1.Entity.File;
 import com.example.mbsedemo1.Service.FileService;
 import jakarta.validation.Valid;
@@ -10,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -40,6 +41,18 @@ public class FileController {
     @GetMapping("/search")
     public List<File> searchFiles(@RequestParam String query) {
         return fileService.searchFiles(query);
+    }
+
+    @PatchMapping("/{fileId}/rename")
+    public ResponseEntity<String> renameFile(@PathVariable Integer fileId, @RequestBody FileNameUpdateRequest request) {
+        fileService.renameFile(fileId, request.getNewName());
+        return ResponseEntity.ok("File renamed successfully.");
+    }
+
+    @PatchMapping("/{fileId}/updateContent")
+    public ResponseEntity<String> updateFileContent(@PathVariable Integer fileId, @RequestBody FileContentUpdateRequest request) {
+        fileService.updateFileContent(fileId, request.getNewContent());
+        return ResponseEntity.ok("File content updated successfully.");
     }
 
     @PostMapping("/create")

@@ -1,7 +1,12 @@
 package com.example.mbsedemo1;
 
+import com.example.mbsedemo1.Controller.ProjectController;
 import com.example.mbsedemo1.Entity.File;
+import com.example.mbsedemo1.Entity.FileorFolder;
 import com.example.mbsedemo1.Mapper.FileMapper;
+import com.example.mbsedemo1.Mapper.FileorFolderMapper;
+import com.example.mbsedemo1.Mapper.ProjectMapper;
+import com.example.mbsedemo1.Service.ProjectStructureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,34 +27,34 @@ public class Mbsedemo1Application {
     @Bean
     public CommandLineRunner run() {
         return args -> {
-            helloWorld(); // 调用你的方法
-//            testFullTextSearch();
+            //测试代码
+            testGetProjectStructure();
+            testGetFolders();
         };
     }
-
-    public void helloWorld() {
-        System.out.println("Hello World");
-    }
+    @Autowired
+    private ProjectStructureService projectStructureService;
 
     @Autowired
-    private FileMapper fileMapper;
+    private FileorFolderMapper fileorFolderMapper;
+    @Autowired
+    private ProjectController projectController;
+public void testGetFolders(){
+    List<FileorFolder> lists = fileorFolderMapper.findUpFolder(1);
+    for (FileorFolder fileorFolder : lists) {
+        System.out.println(fileorFolder.getId());
+    }
+}
 
-    public void setUp() {
-        // 插入测试数据
+    public void testGetProjectStructure(){
 
-        File file = new File();
-        file.setName("TestFile.txt");
-        file.setSize(1024L);
-        file.setUploadTime(new Timestamp(System.currentTimeMillis()));
-        file.setContent("This is a sample content for full text search testing.");
-        fileMapper.insert(file);
+        //测试代码
+        System.out.println(projectController.getProjectStructure(1).getBody());
+
+
     }
 
-    void testFullTextSearch() {
-        // 执行全文搜索
-        List<File> results = fileMapper.searchByContent("sample");
-        results.stream().forEach(file -> System.out.println(file.getName()));
-    }
+
 
 
 }

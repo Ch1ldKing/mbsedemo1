@@ -1,6 +1,6 @@
 package com.example.mbsedemo1.Controller;
 
-import com.example.mbsedemo1.DTO.FolderCreationRequest;
+import com.example.mbsedemo1.DTO.Folder.FolderCreationRequest;
 import com.example.mbsedemo1.Entity.Folder;
 import com.example.mbsedemo1.Service.FolderService;
 import jakarta.validation.Valid;
@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.sql.Timestamp;
 import java.util.List;
 

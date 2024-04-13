@@ -10,8 +10,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // 允许跨域请求的路径
-                .allowedOrigins(",") // 允许的源
-                .allowedMethods("GET", "POST", "PUT", "DELETE") // 允许的请求方法
+                .allowedOriginPatterns("*") // 允许的源
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE") // 允许的请求方法
                 .allowedHeaders("*") // 允许的请求头
                 .allowCredentials(true) // 是否允许发送Cookie
                 .maxAge(3600); // 预检请求的缓存时间（秒）

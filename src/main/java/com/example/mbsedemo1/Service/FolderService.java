@@ -1,6 +1,8 @@
 package com.example.mbsedemo1.Service;
 
+import com.example.mbsedemo1.Entity.File;
 import com.example.mbsedemo1.Entity.Folder;
+import com.example.mbsedemo1.Mapper.FileMapper;
 import com.example.mbsedemo1.Mapper.FolderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,8 +13,9 @@ public class FolderService {
 
     private final FolderMapper folderMapper;
 
+
     @Autowired
-    public FolderService(FolderMapper folderMapper) {
+    public FolderService(FolderMapper folderMapper, FileMapper fileMapper) {
         this.folderMapper = folderMapper;
     }
 
@@ -27,6 +30,8 @@ public class FolderService {
     public List<Folder> getFoldersByProjectId(int projectId) {
         return folderMapper.findByProjectId(projectId);
     }
+
+
 
     public void updateFolder(Folder folder) {
         folderMapper.update(folder);

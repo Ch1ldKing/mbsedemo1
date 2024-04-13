@@ -1,4 +1,4 @@
-package com.example.mbsedemo1.DTO;
+package com.example.mbsedemo1.DTO.File;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

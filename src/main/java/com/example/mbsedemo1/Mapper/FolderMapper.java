@@ -22,4 +22,6 @@ public interface FolderMapper {
 
     @Delete("DELETE FROM folders WHERE id = #{id}")
     void delete(int id);
+
+
 }

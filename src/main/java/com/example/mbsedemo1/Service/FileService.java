@@ -42,6 +42,19 @@ public class FileService {
     public void save(File file) {
         fileMapper.insert(file);
     }
+
+    public void renameFile(Integer fileId, String newName) {
+        File file = fileMapper.findById(fileId);
+        file.setName(newName);
+        fileMapper.update(file);
+    }
+
+    public void updateFileContent(Integer fileId, String newContent) {
+        File file = fileMapper.findById(fileId);
+        file.setContent(newContent);
+        fileMapper.update(file);
+    }
+
     // 其他业务方法
 }
 
