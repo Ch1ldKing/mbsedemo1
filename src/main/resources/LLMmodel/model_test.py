@@ -2,7 +2,7 @@ import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import sys
 
-model_save_path = 'src/main/resources/LLMmodel/finbert_lora_1.pt'
+model_save_path = "F:\\MBSEtest\\mbsedemo\\mbsedemo1\\src\\main\\resources\\LLMmodel\\finbert_lora_1.pt"
 loaded_model = torch.load(model_save_path)
 
 
@@ -24,15 +24,22 @@ def gen_prediction(text1,text2):
     predicted_class = torch.argmax(predictions).item()
     return predicted_class
 
+# def predict(text1,text2):
+#     fin_class = gen_prediction(text1,text2)
+#     if fin_class == 0:
+# #             print("There is a traceability relationship between two requirement texts")
+#             return true
+#     else:
+# #             print("There isn't a traceability relationship between two requirement texts")
+#             return false
 
 if __name__ == '__main__':
     text_1 = sys.argv[1]
     text_2 = sys.argv[2]
 
     fin_class = gen_prediction(text_1,text_2)
-
     if fin_class == 0:
-        print("There is a traceability relationship between two requirement texts")
+        print(True)
+
     else:
-        print("There isn't a traceability relationship between two requirement texts")
-#     print(str(fin_class))
+        print(False)

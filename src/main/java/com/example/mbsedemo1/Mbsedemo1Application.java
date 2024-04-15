@@ -28,8 +28,8 @@ public class Mbsedemo1Application {
     public CommandLineRunner run() {
         return args -> {
             //测试代码
-            testGetProjectStructure();
-            testGetFolders();
+//            testGetProjectStructure();
+//            testGetFolders();
         };
     }
     @Autowired

@@ -1,6 +1,7 @@
 package com.example.mbsedemo1.Controller;
 
 import com.example.mbsedemo1.Entity.File;
+import com.example.mbsedemo1.Entity.FileContent;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,5 +73,11 @@ public class FileorFolderController {
     public List<FileorFolder> searchByContent(@RequestBody FileorFolder fileorFolder) {
         System.out.println(fileorFolder.getContent());
         return fileorFolderService.searchByContent(fileorFolder.getContent());}
+
+    @PostMapping("/check")
+    public boolean checkByContent(@RequestBody FileContent fileContent) {
+       return fileContent.checked();
+    }
+
 }
 

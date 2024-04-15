@@ -24,10 +24,9 @@ public class FileFullTextSearchIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        // 插入测试数据
+
         File file = new File();
         file.setName("TestFile.txt");
-        file.setPath("/test/path");
         file.setSize(1024L);
         file.setUploadTime(new Timestamp(System.currentTimeMillis()));
         file.setContent("This is a sample content for full text search testing.");
@@ -40,6 +39,29 @@ public class FileFullTextSearchIntegrationTest {
         fileMapper.deleteAll();
     }
 
+    /**
+     *
+     * 测试全文搜索
+     * <p>
+     *     测试内容：
+     *     1. 执行全文搜索
+     *     2. 验证结果
+     *     3. 验证搜索结果中是否包含指定内容
+     *     4. 验证搜索结果中是否包含指定文件
+     * </p>
+     * <p>
+     *     测试数据：
+     *     1. 一个文件
+     *     2. 文件内容包含 'sample'
+     * </p>
+     * <p>
+     *     预期结果：
+     *     1. 搜索结果不为空
+     *     2. 搜索结果中包含 'sample'
+     *     3. 搜索结果中包含指定文件
+     * </p>
+     *
+     */
     @Test
     void testFullTextSearch() {
         // 执行全文搜索
